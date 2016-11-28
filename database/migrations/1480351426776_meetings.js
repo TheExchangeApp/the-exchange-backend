@@ -8,6 +8,9 @@ class MeetingsTableSchema extends Schema {
     this.create('meetings', (table) => {
       table.increments()
       table.timestamps()
+      table.integer('group_id')
+      table.string('curriculum')
+      table.timestamps('time')
     })
   }
 
