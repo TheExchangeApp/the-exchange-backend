@@ -13,8 +13,8 @@ class GroupsTableSchema extends Schema {
       table.integer('address_id')
       table.string('day')
       table.string('category')
-      table.integer('organizer_id')
       table.boolean('childcare')
+      table.integer('organizer_id').references('users.id')
     })
   }
 

@@ -16,6 +16,12 @@ class Group extends Lucid {
     return this.hasMany('App/Model/Meeting')
   }
 
+  organizers () {
+    return this.belongsTo('App/Model/User', {
+      foreign_key: organizer_id;
+    });
+  }
+
 }
 
 module.exports = Group

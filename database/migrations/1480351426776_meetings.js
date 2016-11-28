@@ -10,7 +10,7 @@ class MeetingsTableSchema extends Schema {
       table.timestamps()
       table.integer('group_id')
       table.string('curriculum')
-      table.timestamps('time')
+      table.dateTime('time')
     })
   }
 

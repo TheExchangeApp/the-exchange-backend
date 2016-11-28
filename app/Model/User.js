@@ -16,6 +16,13 @@ class User extends Lucid {
     return this.hasManyThrough('App/Model/Group', 'App/Model/Membership')
   }
 
+  organizers () {
+    return this.hasMany('App/Model/User', {
+      foreign_key: organizer_id
+    });
+  }
+
+
 }
 
 module.exports = User
