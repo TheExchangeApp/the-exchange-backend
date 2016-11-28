@@ -4,7 +4,7 @@ const Lucid = use('Lucid')
 
 class Token extends Lucid {
 
-  user () {
+  users () {
     return this.belongsTo('App/Model/User')
   }
 
