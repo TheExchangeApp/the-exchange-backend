@@ -8,6 +8,13 @@ class GroupsTableSchema extends Schema {
     this.create('groups', (table) => {
       table.increments()
       table.timestamps()
+      table.string('title')
+      table.string('description')
+      table.integer('address_id')
+      table.string('day')
+      table.string('category')
+      table.integer('organizer_id')
+      table.boolean('childcare')
     })
   }
 
