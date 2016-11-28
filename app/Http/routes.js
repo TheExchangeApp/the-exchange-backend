@@ -18,3 +18,16 @@
 const Route = use('Route')
 
 Route.on('/').render('welcome')
+
+Route.post('/user', 'UserController.register')
+Route.post('/login', 'UserController.login')
+Route.get('/auth_test', 'UserController.auth_test').middleware('auth')
+Route.put('user/:id', 'UserController.edit')
+Route.delete('user/:id', 'UserController.delete')
+
+Route.post('/group', 'GroupController.add')
+Route.get('/group/search', 'GroupController.search')
+Route.get('/group', 'GroupController.index')
+Route.get('/group/:id', 'GroupController.detail')
+Route.put('/group/:id', 'GroupController.edit')
+Route.delete('group/:id', 'GroupController.delete')
