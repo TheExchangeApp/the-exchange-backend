@@ -16,12 +16,9 @@ class User extends Lucid {
     return this.hasManyThrough('App/Model/Group', 'App/Model/Membership')
   }
 
-  organizers () {
-    return this.hasMany('App/Model/User', {
-      foreign_key: organizer_id
-    });
+  myGroups () {
+    return this.hasMany('App/Model/Group', 'id', 'organizer_id')
   }
-
 
 }
 

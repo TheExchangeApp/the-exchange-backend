@@ -8,9 +8,9 @@ class GroupController {
     let user = request.authUser
     let data = request.only('title', 'description', 'day', 'childcare')
     let address = request.only('street', 'city', 'state', 'zip')
-    let group = new Group(data)
-    let newGroup = yield user.organizers().groups().save(group)
-    let newAddress = yield newGroup.addresses().save(address)
+
+    let newGroup = yield user.myGroups().create(data)
+    let newAddress = yield newGroup.addresses().create(address)
 
     response.status(201).json({ group: newGroup, address: newAddress })
   }
@@ -40,6 +40,7 @@ class GroupController {
   }
 
   * edit (request, response) {
+    let user = request.authUser
     let groupId = request.param('id')
     let updateGroup = yield Group.findBy('id', groupId)
     updateGroup.fill(request.only('title', 'description', 'day', 'category', 'childcare'))

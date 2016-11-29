@@ -4,7 +4,7 @@ const Lucid = use('Lucid')
 
 class Group extends Lucid {
 
-  addressses () {
+  addresses () {
     return this.hasMany('App/Model/Address')
   }
 
@@ -16,10 +16,14 @@ class Group extends Lucid {
     return this.hasMany('App/Model/Meeting')
   }
 
-  organizers () {
-    return this.belongsTo('App/Model/User', {
-      foreign_key: organizer_id;
-    });
+  // organizers () {
+  //   return this.belongsTo('App/Model/User', {
+  //     foreign_key: 'organizer_id'
+  //   });
+  // }
+
+  organizer () {
+    return this.belongsTo('App/Model/User', 'id', 'organizer_id')
   }
 
 }

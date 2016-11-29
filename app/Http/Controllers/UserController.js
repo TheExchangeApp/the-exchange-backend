@@ -32,9 +32,9 @@ class UserController {
   }
 
   * edit (request, response) {
-    let user = request.authUser
     let userId = request.param('id')
     let updateUser = yield User.findBy('id', userId)
+    console.log(updateUser)
     updateUser.fill(request.only('img_url', 'password', 'email'))
     yield updateUser.save()
 
@@ -42,7 +42,6 @@ class UserController {
   }
 
   * delete (request, response) {
-    let user = request.authUser
     let userId = request.param('id')
     let removeUser = yield User.findBy('id', userId)
     yield removeUser.delete()
