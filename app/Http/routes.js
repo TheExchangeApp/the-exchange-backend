@@ -21,6 +21,7 @@ Route.on('/').render('welcome')
 
 Route.post('/user', 'UserController.register')
 Route.post('/login', 'UserController.login')
+Route.get('/user', 'UserController.index')
 Route.put('user/:id', 'UserController.edit').middleware('auth')
 Route.delete('user/:id', 'UserController.delete').middleware('auth')
 

@@ -31,6 +31,13 @@ class UserController {
       }
   }
 
+  * index (request, response) {
+    let userId = request.param('id')
+    let user = yield User.all()
+
+    response.json(user)
+  }
+
   * edit (request, response) {
     let userId = request.param('id')
     let updateUser = yield User.findBy('id', userId)

@@ -58,11 +58,12 @@ class GroupController {
   * delete (request, response) {
     let user = request.authUser
     let groupId = request.param('id')
-    let removeGroup = yield Group.find(groupId)
+    let group = yield Group.find(groupId)
     // let removeAddress = yield Address.query().where('group_id', groupId)
-      // yield removeAddress.delete()
+    // yield removeAddress.delete()
     if (user.id === removeGroup.organizer_id) {
-      yield removeGroup.delete()
+      yield group.address().delete()
+      yield group.delete()
 
       response.status(204).json({ success: "Successfully deleted" })
     } else {
