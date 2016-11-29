@@ -17,7 +17,7 @@ class GroupController {
 
   * index (request, response) {
     let groupId = request.param('id')
-    let group = yield Group.all().orderBy('title')
+    let group = yield Group.all()
 
     response.json(group)
   }
