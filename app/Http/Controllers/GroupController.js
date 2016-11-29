@@ -33,8 +33,8 @@ class GroupController {
 
   * detail (request, response) {
     let groupId = request.param('id')
-    let group = yield Group.find(groupId).with('title', 'description', 'category', 'day', 'childcare')
-    let address = yield Address.find(groupId).with('street', 'city', 'state', 'zip')
+    let group = yield Group.find(groupId)
+    let address = yield Address.query().where('group_id', groupId)
 
     response.json({ group: group, address: address })
   }
@@ -42,19 +42,32 @@ class GroupController {
   * edit (request, response) {
     let user = request.authUser
     let groupId = request.param('id')
-    let updateGroup = yield Group.findBy('id', groupId)
-    updateGroup.fill(request.only('title', 'description', 'day', 'category', 'childcare'))
-    yield updateGroup.save()
+    let updateGroup = yield Group.find(groupId)
 
-    response.status(202).json({ success: "Changes Accepted" })
+    if (user.id === updateGroup.organizer_id) {
+      updateGroup.fill(request.only('title', 'description', 'day', 'category', 'childcare'))
+      yield updateGroup.save()
+
+      response.status(202).json({ success: "Changes Accepted" })
+    } else {
+
+      response.status(403).json({error: "Unauthorized User"})
+    }
   }
 
   * delete (request, response) {
+    let user = request.authUser
     let groupId = request.param('id')
-    let removeGroup = yield Group.findBy('id', groupId)
-    yield removeGroup.delete()
+    let removeGroup = yield Group.find(groupId)
+    // let removeAddress = yield Address.query().where('group_id', groupId)
+      // yield removeAddress.delete()
+    if (user.id === removeGroup.organizer_id) {
+      yield removeGroup.delete()
 
-    response.status(204).json({ success: "Successfully deleted" })
+      response.status(204).json({ success: "Successfully deleted" })
+    } else {
+      response.status(403).json({error: "Unauthorized User"})
+    }
   }
 
 }
