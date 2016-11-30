@@ -25,8 +25,20 @@ class GroupController {
   * search (request, response) {
     let data = request.only('title', 'description', 'category', 'day', 'childcare')
     let address = request.only('street', 'city', 'state', 'zip')
+    // if (address == {}) address = undefined
+    // console.log('address is: ', address)
     let searchedData = yield Group.query().where(data)
-    let searchedAddress = yield Address.query().where(address)
+
+    let searchedAddress = [];
+    // let group;
+    //
+    // for (var i = 0; i < searchedData.length; i++) {
+    //   group = yield Group.find(searchedData[i].id);
+    //   console.log('group is: ', group.addresses().fetch())
+    //   searchedAddress.push(group.addresses().fetch())
+    // }
+    //
+    // console.log(searchedAddress);
 
     response.json({ group: searchedData, address: searchedAddress })
   }
@@ -69,6 +81,11 @@ class GroupController {
     } else {
       response.status(403).json({error: "Unauthorized User"})
     }
+  }
+
+  * join (request, response) {
+    let user = request.authUser
+    yield group.users().create(user)
   }
 
 }

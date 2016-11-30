@@ -41,7 +41,6 @@ class UserController {
   * edit (request, response) {
     let userId = request.param('id')
     let updateUser = yield User.findBy('id', userId)
-    console.log(updateUser)
     updateUser.fill(request.only('img_url', 'password', 'email'))
     yield updateUser.save()
 

@@ -27,7 +27,9 @@ Route.delete('user/:id', 'UserController.delete').middleware('auth')
 
 Route.post('/group', 'GroupController.add').middleware('auth')
 Route.get('/group', 'GroupController.index')
-Route.get('/group/search', 'GroupController.search')
+Route.post('/group/search', 'GroupController.search')
 Route.get('/group/:id', 'GroupController.detail')
 Route.put('/group/:id', 'GroupController.edit').middleware('auth')
 Route.delete('group/:id', 'GroupController.delete').middleware('auth')
+
+// Route.post('/group/:id/join', 'GroupController.join').middleware('auth'))
