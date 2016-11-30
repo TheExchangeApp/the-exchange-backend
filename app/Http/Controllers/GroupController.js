@@ -25,22 +25,9 @@ class GroupController {
   * search (request, response) {
     let data = request.only('title', 'description', 'category', 'day', 'childcare')
     let address = request.only('street', 'city', 'state', 'zip')
-    // if (address == {}) address = undefined
-    // console.log('address is: ', address)
-    let searchedData = yield Group.query().where(data)
+    let searchedData = yield Group.query().with('addresses').where(data).fetch()
 
-    let searchedAddress = [];
-    // let group;
-    //
-    // for (var i = 0; i < searchedData.length; i++) {
-    //   group = yield Group.find(searchedData[i].id);
-    //   console.log('group is: ', group.addresses().fetch())
-    //   searchedAddress.push(group.addresses().fetch())
-    // }
-    //
-    // console.log(searchedAddress);
-
-    response.json({ group: searchedData, address: searchedAddress })
+    response.json({ results: searchedData })
   }
 
   * detail (request, response) {
