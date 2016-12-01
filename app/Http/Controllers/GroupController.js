@@ -33,7 +33,7 @@ class GroupController {
 
   * detail (request, response) {
     let groupId = request.param('id')
-    let group = yield Group.with('users').find(groupId)
+    let group = yield Group.find(groupId).with('users')
     let address = yield Address.query().where('group_id', groupId)
 
     response.json({ group: group, address: address })
