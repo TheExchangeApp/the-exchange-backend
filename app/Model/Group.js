@@ -13,7 +13,7 @@ class Group extends Lucid {
   }
 
   users () {
-    return this.hasManyThrough('App/Model/User', 'App/Model/Membership')
+    return this.belongsToMany('App/Model/User', 'App/Model/Membership')
   }
 
   meetings () {

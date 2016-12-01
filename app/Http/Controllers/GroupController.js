@@ -2,6 +2,10 @@
 
 const Group = use("App/Model/Group")
 const Address = use("App/Model/Address")
+const Membership = use("App/Model/Membership")
+const Meeting = use("App/Model/Meeting")
+const MeetingAttendee = use("App/Model/MeetingAttendee")
+const User = use("App/Model/User")
 
 class GroupController {
   * add (request, response) {
@@ -76,6 +80,41 @@ class GroupController {
     yield group.memberships().create({ user_id: user.id })
 
     response.json({success: "User added to group"})
+  }
+
+  * members (request, response) {
+    let groupId = request.param('id')
+    let members = yield Membership.query().where('group_id', groupId)
+
+    response.json(members)
+  }
+
+  * meeting (request, response) {
+    let user = request.authUser
+    let groupId = request.param('id')
+    let group = yield Group.find(groupId)
+    let meeting = request.only('curriculum', 'time', groupId)
+
+    if (user.id === group.organizer_id) {
+      let newMeeting = yield group.meetings().create(meeting)
+
+      response.status(201).json({ meeting: newMeeting })
+    } else {
+
+      response.status(403).json({error: "Unauthorized User"})
+    }
+  }
+
+  * indexMeeting (request, response) {
+    let groupId = request.param('id')
+    let group = yield Group.find(groupId)
+
+    if (group) {
+        let meetings = yield Meeting.query().where('group_id', groupId)
+        response.json(meetings)
+    } else {
+      response.status(404).json({ error: "No such group" })
+    }
   }
 
 }

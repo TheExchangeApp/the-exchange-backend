@@ -32,4 +32,8 @@ Route.get('/group/:id', 'GroupController.detail')
 Route.put('/group/:id', 'GroupController.edit').middleware('auth')
 Route.delete('group/:id', 'GroupController.delete').middleware('auth')
 
-Route.post('/group/:id/member', 'GroupController.join').middleware('auth')
+Route.post('/group/:id/join', 'GroupController.join').middleware('auth')
+Route.get('/group/:id/members', 'GroupController.members').middleware('auth')
+
+Route.post('/group/:id/meeting', 'GroupController.meeting').middleware('auth')
+Route.get('/group/:id/meeting', 'GroupController.indexMeeting')
