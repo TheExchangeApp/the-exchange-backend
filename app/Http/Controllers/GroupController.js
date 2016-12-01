@@ -10,7 +10,7 @@ class GroupController {
     let address = request.only('street', 'city', 'state', 'zip')
 
     let newGroup = yield user.myGroups().create(data)
-    let newAddress = yield newGroup.addresses().create(address)
+    let newAddress = yield newGroup.address().create(address)
 
     response.status(201).json({ group: newGroup, address: newAddress })
   }
@@ -25,7 +25,7 @@ class GroupController {
   * search (request, response) {
     let data = request.only('title', 'description', 'category', 'day', 'childcare')
     let address = request.only('street', 'city', 'state', 'zip')
-    let searchedData = yield Group.query().with('addresses').where(data).fetch()
+    let searchedData = yield Group.query().with('address').where(data).fetch()
 
     console.log(data)
     response.json({ results: searchedData })
@@ -33,7 +33,7 @@ class GroupController {
 
   * detail (request, response) {
     let groupId = request.param('id')
-    let group = yield Group.find(groupId)
+    let group = yield Group.with('users').find(groupId)
     let address = yield Address.query().where('group_id', groupId)
 
     response.json({ group: group, address: address })
@@ -59,8 +59,6 @@ class GroupController {
     let user = request.authUser
     let groupId = request.param('id')
     let group = yield Group.find(groupId)
-    // let removeAddress = yield Address.query().where('group_id', groupId)
-    // yield removeAddress.delete()
     if (user.id === removeGroup.organizer_id) {
       yield group.address().delete()
       yield group.delete()
@@ -73,7 +71,11 @@ class GroupController {
 
   * join (request, response) {
     let user = request.authUser
-    yield group.users().create(user)
+    let groupId = request.param('id')
+    let group = yield Group.find(groupId)
+    yield group.memberships().create({ user_id: user.id })
+
+    response.json({success: "User added to group"})
   }
 
 }

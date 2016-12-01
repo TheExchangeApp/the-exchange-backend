@@ -4,8 +4,12 @@ const Lucid = use('Lucid')
 
 class Group extends Lucid {
 
-  addresses () {
-    return this.hasMany('App/Model/Address')
+  address () {
+    return this.hasOne('App/Model/Address')
+  }
+
+  memberships () {
+    return this.hasMany('App/Model/Membership')
   }
 
   users () {
