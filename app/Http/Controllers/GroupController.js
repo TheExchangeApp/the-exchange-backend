@@ -27,6 +27,7 @@ class GroupController {
     let address = request.only('street', 'city', 'state', 'zip')
     let searchedData = yield Group.query().with('addresses').where(data).fetch()
 
+    console.log(data)
     response.json({ results: searchedData })
   }
 
