@@ -77,9 +77,16 @@ class GroupController {
     let user = request.authUser
     let groupId = request.param('id')
     let group = yield Group.find(groupId)
-    yield group.memberships().create({ user_id: user.id })
+    let memberId = yield group.memberships().where('user_id', user.id)
+    console.log(memberId)
 
-    response.json({success: "User added to group"})
+    if (memberId.length) {
+      response.status(403).json({error: "Already a member"})
+    } else {
+      yield group.memberships().create({ user_id: user.id })
+      response.json({success: "User added to group"})
+
+    };
   }
 
   * members (request, response) {
