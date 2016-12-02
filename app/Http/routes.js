@@ -23,6 +23,7 @@ Route.post('/user', 'UserController.register')
 Route.post('/login', 'UserController.login')
 Route.get('/user', 'UserController.index')
 Route.put('user/:id', 'UserController.edit').middleware('auth')
+Route.get('user/:id', 'UserController.profile').middleware('auth')
 Route.delete('user/:id', 'UserController.delete').middleware('auth')
 
 Route.post('/group', 'GroupController.add').middleware('auth')

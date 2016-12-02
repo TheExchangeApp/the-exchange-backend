@@ -47,6 +47,13 @@ class UserController {
     response.status(202).json({ success: "Changes Accepted" })
   }
 
+  * profile (request, response) {
+    let userId = request.param('id')
+    let userProfile = yield User.findBy('id', userId)
+
+    response.json(userProfile)
+  }
+
   * delete (request, response) {
     let userId = request.param('id')
     let removeUser = yield User.findBy('id', userId)
