@@ -85,7 +85,6 @@ class GroupController {
     } else {
       yield group.memberships().create({ user_id: user.id })
       response.json({success: "User added to group"})
-
     };
   }
 
