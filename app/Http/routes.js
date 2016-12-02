@@ -24,8 +24,8 @@ Route.post('/login', 'UserController.login')
 Route.get('/user', 'UserController.index')
 Route.put('/user/:id', 'UserController.edit').middleware('auth')
 Route.get('/user/:id', 'UserController.profile').middleware('auth')
-Route.get('/user/:id/group', 'UserController.profile').middleware('auth')
-Route.get('/user/:id/meeting', 'UserController.profile').middleware('auth')
+Route.get('/user/:id/groups', 'UserController.profileGroup').middleware('auth')
+Route.get('/user/:id/meetings', 'UserController.profileMeeting').middleware('auth')
 
 Route.delete('/user/:id', 'UserController.delete').middleware('auth')
 

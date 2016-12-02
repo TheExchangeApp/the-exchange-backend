@@ -2,6 +2,8 @@
 
 const Hash = use('Hash')
 const User = use("App/Model/User")
+const Group = use("App/Model/Group")
+const Membership = use("App/Model/Membership")
 
 class UserController {
   * register (request, response) {
@@ -38,6 +40,31 @@ class UserController {
     response.json(user)
   }
 
+  * profile (request, response) {
+    let userId = request.param('id')
+    let userProfile = yield User.findBy('id', userId)
+
+    response.json(userProfile)
+  }
+
+  * profileGroup (request, response) {
+    let user = request.authUser
+    let userId = request.param('id')
+    let groupList = yield Membership.query().with('groups').where('user_id', userId).fetch()
+    console.log(groupList)
+
+    response.json(groupList)
+  }
+
+  // * profileMeeting (request, response) {
+  //   let user = request.authUser
+  //   let userId = request.param('id')
+  //   let groupList = yield Membership.query().with('groups').where('meeting_id', groupId).fetch()
+  //   console.log(groupList)
+  //
+  //   response.json(groupList)
+  // }
+
   * edit (request, response) {
     let userId = request.param('id')
     let updateUser = yield User.findBy('id', userId)
@@ -45,13 +72,6 @@ class UserController {
     yield updateUser.save()
 
     response.status(202).json({ success: "Changes Accepted" })
-  }
-
-  * profile (request, response) {
-    let userId = request.param('id')
-    let userProfile = yield User.findBy('id', userId)
-
-    response.json(userProfile)
   }
 
   * delete (request, response) {
