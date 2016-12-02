@@ -84,9 +84,11 @@ class GroupController {
 
   * members (request, response) {
     let groupId = request.param('id')
-    let members = yield Membership.query().where('group_id', groupId)
+    let group = yield Group.find(groupId);
+    let memberlist = yield Membership.query().with('users').where('group_id', groupId).fetch()
+    console.log(memberlist)
 
-    response.json(members)
+    response.json(memberlist)
   }
 
   * meeting (request, response) {
