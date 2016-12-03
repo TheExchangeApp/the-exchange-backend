@@ -95,7 +95,7 @@ class GroupController {
     let user = request.authUser
     let groupId = request.param('id')
     let group = yield Group.find(groupId)
-    let meeting = request.only('curriculum', 'time', groupId)
+    let meeting = request.only('curriculum', 'time', 'group_id')
 
     console.log("meeting obj: ", meeting);
 
