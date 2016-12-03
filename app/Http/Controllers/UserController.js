@@ -51,19 +51,18 @@ class UserController {
     let user = request.authUser
     let userId = request.param('id')
     let groupList = yield Membership.query().with('groups').where('user_id', userId).fetch()
-    console.log(groupList)
 
     response.json(groupList)
   }
 
-  // * profileMeeting (request, response) {
-  //   let user = request.authUser
-  //   let userId = request.param('id')
-  //   let groupList = yield Membership.query().with('groups').where('meeting_id', groupId).fetch()
-  //   console.log(groupList)
-  //
-  //   response.json(groupList)
-  // }
+  * profileMeeting (request, response) {
+    let user = request.authUser
+    let userId = request.param('id')
+    let meetingList = yield Membership.query().with('groups').where('meeting_id', groupId).fetch()
+    console.log(meetingList)
+
+    response.json(meetingList)
+  }
 
   * edit (request, response) {
     let userId = request.param('id')

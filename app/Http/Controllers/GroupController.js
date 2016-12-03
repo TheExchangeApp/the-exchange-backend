@@ -97,6 +97,8 @@ class GroupController {
     let group = yield Group.find(groupId)
     let meeting = request.only('curriculum', 'time', groupId)
 
+    console.log("meeting obj: ", meeting);
+
     if (user.id === group.organizer_id) {
       let newMeeting = yield group.meetings().create(meeting)
 
