@@ -5,6 +5,7 @@ const User = use("App/Model/User")
 const Group = use("App/Model/Group")
 const Membership = use("App/Model/Membership")
 const Meeting = use("App/Model/Meeting")
+const MeetingAttendee = use("App/Model/MeetingAttendee")
 
 class UserController {
   * register (request, response) {
@@ -59,7 +60,7 @@ class UserController {
   * profileMeeting (request, response) {
     let user = request.authUser
     let userId = request.param('id')
-    let meetingList = yield Membership.query().with('meetingAttendees').where('user_id', userId).fetch()
+    let meetingList = yield MeetingAttendee.query().with('meetings').where('user_id', userId).fetch()
     console.log(meetingList)
 
     response.json(meetingList)

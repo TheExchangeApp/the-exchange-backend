@@ -12,6 +12,10 @@ class MeetingAttendee extends Lucid {
     return this.belongsTo('App/Model/Meeting')
   }
 
+  users () {
+    return this.belongsTo('App/Model/User')
+  }
+
 }
 
 module.exports = MeetingAttendee
