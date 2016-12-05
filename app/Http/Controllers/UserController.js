@@ -60,7 +60,7 @@ class UserController {
   * profileMeeting (request, response) {
     let user = request.authUser
     let userId = request.param('id')
-    let meetingList = yield MeetingAttendee.query().with('meetings').where('user_id', userId).fetch()
+    let meetingList = yield User.query().with('meetings').where('user_id', userId).fetch()
     console.log(meetingList)
 
     response.json(meetingList)

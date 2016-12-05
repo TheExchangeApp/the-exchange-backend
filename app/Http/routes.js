@@ -26,7 +26,6 @@ Route.put('/user/:id', 'UserController.edit').middleware('auth')
 Route.get('/user/:id', 'UserController.profile').middleware('auth')
 Route.get('/user/:id/groups', 'UserController.profileGroup').middleware('auth')
 Route.get('/user/:id/meetings', 'UserController.profileMeeting').middleware('auth')
-
 Route.delete('/user/:id', 'UserController.delete').middleware('auth')
 
 Route.post('/group', 'GroupController.add').middleware('auth')
@@ -41,3 +40,6 @@ Route.get('/group/:id/members', 'GroupController.members').middleware('auth')
 
 Route.post('/group/:id/meeting', 'GroupController.meeting').middleware('auth')
 Route.get('/group/:id/meeting', 'GroupController.indexMeeting')
+
+Route.get('/meeting/:id', 'MeetingController.detail')
+Route.post('/meeting/:id/join', 'MeetingController.join').middleware('auth')
