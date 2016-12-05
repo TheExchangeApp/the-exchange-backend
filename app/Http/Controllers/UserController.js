@@ -4,6 +4,7 @@ const Hash = use('Hash')
 const User = use("App/Model/User")
 const Group = use("App/Model/Group")
 const Membership = use("App/Model/Membership")
+const Meeting = use("App/Model/Meeting")
 
 class UserController {
   * register (request, response) {
@@ -58,7 +59,7 @@ class UserController {
   * profileMeeting (request, response) {
     let user = request.authUser
     let userId = request.param('id')
-    let meetingList = yield Membership.query().with('groups').where('meeting_id', groupId).fetch()
+    let meetingList = yield Membership.query().with('meetingAttendees').where('user_id', userId).fetch()
     console.log(meetingList)
 
     response.json(meetingList)

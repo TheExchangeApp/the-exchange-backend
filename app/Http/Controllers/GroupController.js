@@ -37,10 +37,11 @@ class GroupController {
 
   * detail (request, response) {
     let groupId = request.param('id')
-    let group = yield Group.query().with('users').where('id', groupId)
-    let address = yield Address.query().where('group_id', groupId)
+    let group = yield Group.query().with('users', 'meetings', 'address').where('id', groupId).fetch()
+    // let group = yield Group.query().with('users').where('id', groupId)
+    // let address = yield Address.query().where('group_id', groupId)
 
-    response.json({ group: group, address: address })
+    response.json({ group: group })
   }
 
   * edit (request, response) {
@@ -119,6 +120,15 @@ class GroupController {
     } else {
       response.status(404).json({ error: "No such group" })
     }
+  }
+
+  * joinMeeting (request, response) {
+    let user = request.authUser
+    let groupId = request.param('id')
+    let group = yield Group.find(groupId)
+    yield group.memberships().create({ user_id: user.id })
+
+    response.json({success: "User added to meeting"})
   }
 
 }
