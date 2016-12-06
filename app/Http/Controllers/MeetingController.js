@@ -6,6 +6,7 @@ const Membership = use("App/Model/Membership")
 const Meeting = use("App/Model/Meeting")
 const MeetingAttendee = use("App/Model/MeetingAttendee")
 const User = use("App/Model/User")
+const Note = use("App/Model/Note")
 
 class MeetingController {
   * detail (request, response) {
@@ -25,6 +26,23 @@ class MeetingController {
 
     response.json({success: "User added to meeting"})
   }
+
+  * post (request, response) {
+    let user = request.authUser
+    let data = request.only('note')
+    yield Note.create(data)
+
+    response.status(202).json({ success: "Note posted" })
+  }
+
+  * index (request, response) {
+    let noteId = request.param('id')
+    let notes = yield Note.all()
+
+    response.json(notes)
+
+  }
+
 
 }
 
