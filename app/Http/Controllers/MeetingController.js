@@ -11,9 +11,9 @@ const Note = use("App/Model/Note")
 class MeetingController {
   * detail (request, response) {
     let meetingId = request.param('id')
-    let meeting = yield Group.query().with('meetings').where('id', meetingId).fetch()
+    let mtg = yield Meeting.find(meetingId)
 
-    response.json({ meeting: meeting })
+    response.json({ meeting: mtg })
   }
 
   * join (request, response) {
@@ -42,6 +42,27 @@ class MeetingController {
     response.json(notes)
   }
 
+  * postObj (request, response) {
+    let user = request.authUser
+    let meetingId = request.param('id')
+    let mtg = yield Meeting.find(meetingId)
+
+    // if (user.id === mtg.organizer_id) {
+      mtg.fill(request.only('objective', 'question', 'note'))
+      yield mtg.save()
+      response.status(202).json(mtg)
+    // } else {
+    //
+    //   response.status(403).json({error: "Unauthorized User"})
+    // }
+  }
+
+  * getObj (request, response) {
+    let meetingId = request.param('id')
+    let mtg = yield Meeting.find(meetingId)
+
+    response.json(mtg)
+  }
 
 }
 
