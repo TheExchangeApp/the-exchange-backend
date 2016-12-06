@@ -27,7 +27,7 @@ class MeetingController {
     response.json({success: "User added to meeting"})
   }
 
-  * post (request, response) {
+  * note (request, response) {
     let user = request.authUser
     let data = request.only('note')
     yield Note.create(data)

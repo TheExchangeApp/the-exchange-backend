@@ -43,7 +43,7 @@ Route.get('/group/:id/meeting', 'GroupController.indexMeeting')
 
 Route.get('/meeting/:id', 'MeetingController.detail')
 Route.post('/meeting/:id/join', 'MeetingController.join').middleware('auth')
-Route.post('/meeting/:id/note', 'MeetingController.post').middleware('auth')
+Route.post('/meeting/:id/note', 'MeetingController.note').middleware('auth')
 Route.get('/meeting/:id/note', 'MeetingController.index').middleware('auth')
 
 Route.put('meeting/:id/objective', 'MeetingController.postObj').middleware('auth')
