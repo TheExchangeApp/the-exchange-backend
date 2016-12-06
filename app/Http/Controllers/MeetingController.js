@@ -36,11 +36,10 @@ class MeetingController {
   }
 
   * index (request, response) {
-    let noteId = request.param('id')
-    let notes = yield Note.all()
+    let meetingId = request.param('id')
+    let notes = yield Note.all(meetingId)
 
     response.json(notes)
-
   }
 
 
