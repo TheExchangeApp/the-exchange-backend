@@ -11,7 +11,7 @@ const Note = use("App/Model/Note")
 class MeetingController {
   * detail (request, response) {
     let meetingId = request.param('id')
-    let mtg = yield Notes.find(meetingId)
+    let mtg = yield Meeting.find(meetingId)
 
     response.json({ meeting: mtg })
   }
