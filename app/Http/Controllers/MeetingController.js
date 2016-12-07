@@ -29,10 +29,13 @@ class MeetingController {
 
   * note (request, response) {
     let user = request.authUser
-    let data = request.only('note')
-    let newNote = yield Note.create(data)
+    let meetingId = request.param('id')
+    let meeting = yield Meeting.find(meetingId)
 
-    response.status.json(newNote)
+    let data = request.only('note')
+    let newNote = yield meeting.notes().create(data)
+
+    response.json(newNote)
   }
 
   * index (request, response) {
