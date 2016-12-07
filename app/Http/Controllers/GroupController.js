@@ -83,7 +83,7 @@ class GroupController {
     // console.log('memberships is: ', typeof mems, mems)
     let alreadyAdded = false;
 
-    mems.forEach(mem => { if (mem.user_id === user.id) alreadyAdded = true; break; })
+    mems.forEach(mem => { if (mem.user_id === user.id) alreadyAdded = true; })
 
     if (alreadyAdded){
       response.status(400).json({error: "User already in group"})
