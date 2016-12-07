@@ -30,9 +30,9 @@ class MeetingController {
   * note (request, response) {
     let user = request.authUser
     let data = request.only('note')
-    yield Note.create(data)
+    let newNote = yield Note.create(data)
 
-    response.status(202).json({ success: "Note posted" })
+    response.status.json(newNote)
   }
 
   * index (request, response) {
