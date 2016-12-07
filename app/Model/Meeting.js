@@ -8,6 +8,10 @@ class Meeting extends Lucid {
     return this.belongsTo('App/Model/Group')
   }
 
+  users () {
+    return this.belongsTo('App/Model/User')
+  }
+
   meetingAttendees () {
     return this.hasMany('App/Model/MeetingAttendee')
   }

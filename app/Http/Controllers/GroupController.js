@@ -11,7 +11,7 @@ class GroupController {
   * add (request, response) {
     let user = request.authUser
     let data = request.only('title', 'description', 'day', 'childcare')
-    let address = request.only('street', 'city', 'state', 'zip')
+    let address = request.only('street', 'city', 'state', 'zip','lat','lng')
 
     let newGroup = yield user.myGroups().create(data)
     let newAddress = yield newGroup.address().create(address)
@@ -28,7 +28,7 @@ class GroupController {
 
   * search (request, response) {
     let data = request.only('title', 'description', 'category', 'day', 'childcare')
-    let address = request.only('street', 'city', 'state', 'zip')
+    let address = request.only('street', 'city', 'state', 'zip', 'lat', 'lng')
     let searchedData = yield Group.query().with('address').where(data).fetch()
 
     console.log(data)

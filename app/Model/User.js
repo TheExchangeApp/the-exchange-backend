@@ -20,8 +20,12 @@ class User extends Lucid {
     return this.hasMany('App/Model/Group', 'id', 'organizer_id')
   }
 
-  MeetingAttendees () {
+  meetingAttendees () {
     return this.hasMany('App/Model/MeetingAttendee')
+  }
+
+  meetings () {
+    return this.belongsToMany('App/Model/Meeting', 'App/Model/MeetingAttendee')
   }
 
   notes () {

@@ -19,15 +19,15 @@ class MeetingController {
   * join (request, response) {
     let user = request.authUser
     let meetingId = request.param('id')
-    let mtg = yield Meeting.find(meetingId)
-    let attend = yield mtg.meetingAttendees()
-    console.log('meeting is: ', mtg)
-    console.log('memberships is: ', typeof attend, attend)
-    let alreadyAdded = false;
+    let mtg = yield Meeting.findOrFail(meetingId)
 
-    attend.forEach(attend => { if (attend.user_id === user.id) alreadyAdded = true; })
+    let alreadyAttending = {
+      user_id: user.id,
+      meeting_id: meetingId
+    }
+    let attending = yield MeetingAttendee.where(alreadyAttending)
 
-    if (alreadyAdded){
+    if (attending.length > 0) {
       response.status(400).json({error: "User already in meeting"})
     } else {
       yield mtg.meetingAttendees().create({ user_id: user.id })

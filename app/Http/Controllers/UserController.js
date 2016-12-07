@@ -50,11 +50,10 @@ class UserController {
   }
 
   * profileGroup (request, response) {
-    let user = request.authUser
-    let userId = request.param('id')
-    let groupList = yield Membership.query().with('groups').where('user_id', userId).fetch()
+    let profile = yield User.query()
+      .with('meetings', 'groups').where('id', request.authUser.id).fetch()
 
-    response.json(groupList)
+    response.json(profile)
   }
 
   * profileMeeting (request, response) {
