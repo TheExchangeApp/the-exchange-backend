@@ -20,11 +20,19 @@ class MeetingController {
     let user = request.authUser
     let meetingId = request.param('id')
     let mtg = yield Meeting.find(meetingId)
-    console.log("hi", mtg)
+    let attend = yield mtg.meetingAttendees()
+    console.log('meeting is: ', mtg)
+    console.log('memberships is: ', typeof attend, attend)
+    let alreadyAdded = false;
 
-    yield mtg.meetingAttendees().create({ user_id: user.id })
+    attend.forEach(attend => { if (attend.user_id === user.id) alreadyAdded = true; })
 
-    response.json({success: "User added to meeting"})
+    if (alreadyAdded){
+      response.status(400).json({error: "User already in meeting"})
+    } else {
+      yield mtg.meetingAttendees().create({ user_id: user.id })
+      response.status(202).json({success: "User added to meeting"})
+    }
   }
 
   * note (request, response) {
@@ -50,14 +58,9 @@ class MeetingController {
     let meetingId = request.param('id')
     let mtg = yield Meeting.find(meetingId)
 
-    // if (user.id === mtg.organizer_id) {
-      mtg.fill(request.only('objective', 'question', 'note'))
-      yield mtg.save()
-      response.status(202).json(mtg)
-    // } else {
-    //
-    //   response.status(403).json({error: "Unauthorized User"})
-    // }
+    mtg.fill(request.only('objective', 'question', 'note'))
+    yield mtg.save()
+    response.status(202).json(mtg)
   }
 
   * getObj (request, response) {
