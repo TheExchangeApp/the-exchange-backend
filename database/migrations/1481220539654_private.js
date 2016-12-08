@@ -12,7 +12,7 @@ class PrivateTableSchema extends Schema {
 
   down () {
     this.table('notes', (table) => {
-      table.dropColumn('private')
+      // table.dropColumn('private')
     })
   }
 
