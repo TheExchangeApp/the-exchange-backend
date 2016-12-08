@@ -45,7 +45,7 @@ class MeetingController {
     let meetingId = request.param('id')
     let meeting = yield Meeting.find(meetingId)
 
-    let data = request.only('note')
+    let data = request.only('note', 'private')
     let newNote = yield meeting.notes().create(data)
 
     response.json(newNote)
