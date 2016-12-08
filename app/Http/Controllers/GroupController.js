@@ -77,20 +77,22 @@ class GroupController {
   * join (request, response) {
     let user = request.authUser
     let groupId = request.param('id')
-    let group = yield Group.find(groupId)
-    let mems = yield group.memberships()
-    // console.log('group is: ', group)
-    // console.log('memberships is: ', typeof mems, mems)
-    let alreadyAdded = false;
+    let grp = yield Group.findOrFail(groupId)
 
-    mems.forEach(mem => { if (mem.user_id === user.id) alreadyAdded = true; })
+    let alreadyMember = {
+      user_id: user.id,
+      group_id: groupId
+    }
+    let attending = yield Membership.query()
+      .where(alreadyMember).fetch()
 
-    if (alreadyAdded){
+    if (attending.value().length > 0) {
       response.status(400).json({error: "User already in group"})
     } else {
-      yield group.memberships().create({ user_id: user.id })
+      yield grp.memberships().create({ user_id: user.id })
       response.status(202).json({success: "User added to group"})
     }
+
   }
 
   * members (request, response) {

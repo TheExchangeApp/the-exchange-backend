@@ -10,10 +10,16 @@ const Note = use("App/Model/Note")
 
 class MeetingController {
   * detail (request, response) {
-    let meetingId = request.param('id')
-    let mtg = yield Meeting.find(meetingId)
+    // let meetingId = request.param('id')
+    // let mtg = yield Meeting.find(meetingId)
+    //
+    // response.json({ meeting: mtg })
 
-    response.json({ meeting: mtg })
+    let mtg = yield Meeting.query()
+      .with('users', 'meetingAttendees', 'notes', 'groups')
+      .where('id', request.authUser.id).fetch()
+
+    response.json(mtg)
   }
 
   * join (request, response) {
@@ -25,9 +31,12 @@ class MeetingController {
       user_id: user.id,
       meeting_id: meetingId
     }
-    let attending = yield MeetingAttendee.where(alreadyAttending)
+    console.log(alreadyAttending)
 
-    if (attending.length > 0) {
+    let attending = yield MeetingAttendee.query()
+      .where(alreadyAttending).fetch()
+
+    if (attending.value().length > 0) {
       response.status(400).json({error: "User already in meeting"})
     } else {
       yield mtg.meetingAttendees().create({ user_id: user.id })
