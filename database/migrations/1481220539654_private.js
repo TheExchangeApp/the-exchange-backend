@@ -6,13 +6,13 @@ class PrivateTableSchema extends Schema {
 
   up () {
     this.table('notes', (table) => {
-      this.boolean('private')
+      table.boolean('private')
     })
   }
 
   down () {
     this.table('notes', (table) => {
-      this.dropColumn('private')
+      table.dropColumn('private')
     })
   }
 
