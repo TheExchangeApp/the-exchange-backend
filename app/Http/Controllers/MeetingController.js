@@ -10,14 +10,10 @@ const Note = use("App/Model/Note")
 
 class MeetingController {
   * detail (request, response) {
-    // let meetingId = request.param('id')
-    // let mtg = yield Meeting.find(meetingId)
-    //
-    // response.json({ meeting: mtg })
-
+    let meetingId = request.param('id')
     let mtg = yield Meeting.query()
-      .with('users', 'meetingAttendees', 'notes', 'groups')
-      .where('id', request.authUser.id).fetch()
+      .with('users', 'notes', 'group')
+      .where('id', meetingId).fetch()
 
     response.json(mtg)
   }

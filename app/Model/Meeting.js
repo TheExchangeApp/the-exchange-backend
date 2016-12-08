@@ -4,12 +4,14 @@ const Lucid = use('Lucid')
 
 class Meeting extends Lucid {
 
-  groups () {
+  group () {
     return this.belongsTo('App/Model/Group')
   }
 
   users () {
-    return this.belongsTo('App/Model/User')
+    // implies a user_id (FK) on meetings
+    // return this.belongsTo('App/Model/User')
+    return this.belongsToMany('App/Model/User', 'meeting_attendees')
   }
 
   meetingAttendees () {
