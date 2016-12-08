@@ -13,7 +13,7 @@ class User extends Lucid {
   }
 
   groups () {
-    return this.belongsToMany('App/Model/Group', 'App/Model/Membership')
+    return this.belongsToMany('App/Model/Group', 'memberships')
   }
 
   myGroups () {
@@ -25,7 +25,7 @@ class User extends Lucid {
   }
 
   meetings () {
-    return this.belongsToMany('App/Model/Meeting', 'App/Model/MeetingAttendee')
+    return this.belongsToMany('App/Model/Meeting', 'meeting_attendees')
   }
 
   notes () {

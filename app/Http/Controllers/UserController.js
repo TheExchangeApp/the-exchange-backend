@@ -51,7 +51,8 @@ class UserController {
 
   * profileGroup (request, response) {
     let profile = yield User.query()
-      .with('meetings', 'groups').where('id', request.authUser.id).fetch()
+      .with('meetings', 'groups')
+      .where('id', request.authUser.id).fetch()
 
     response.json(profile)
   }
