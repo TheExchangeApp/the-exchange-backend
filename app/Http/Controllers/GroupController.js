@@ -6,6 +6,7 @@ const Membership = use("App/Model/Membership")
 const Meeting = use("App/Model/Meeting")
 const MeetingAttendee = use("App/Model/MeetingAttendee")
 const User = use("App/Model/User")
+const Database = use("Database")
 
 class GroupController {
   * add (request, response) {
