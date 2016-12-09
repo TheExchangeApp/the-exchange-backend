@@ -45,7 +45,7 @@ class GroupController {
       WHERE ${distanceQuery} < ${start.miles || 5} ORDER BY userDistance`);
     console.log(nearbyQuery);
 
-    let loc = yield Database.table('addresses').innerJoin('groups', 'group_id')
+    let loc = yield Database.table('groups').innerJoin('addresses', 'group.id', 'addresses.group_id')
     let nearbyGroups = yield Group.query().with(loc).whereIn('group_id', nearbyQuery.rows.map(loc => loc.group_id)).fetch()
     response.status(200).json(nearbyGroups)
   }
