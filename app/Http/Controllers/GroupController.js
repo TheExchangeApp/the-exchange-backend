@@ -46,7 +46,7 @@ class GroupController {
     console.log(nearbyQuery);
 
     let loc = yield Database.table('addresses').innerJoin('groups', 'id', 'group_id')
-    let nearbyGroups = yield Group.query().with(loc).whereIn('id', nearbyQuery.rows.map(loc => loc.group_id)).fetch()
+    let nearbyGroups = yield Group.query().with(loc).whereIn('group_id', nearbyQuery.rows.map(loc => loc.group_id)).fetch()
     response.status(200).json(nearbyGroups)
   }
 
