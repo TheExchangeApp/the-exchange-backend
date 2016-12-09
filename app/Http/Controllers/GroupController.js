@@ -45,15 +45,15 @@ class GroupController {
       WHERE ${distanceQuery} < ${start.miles || 5} ORDER BY userDistance`);
     console.log(nearbyQuery);
 
-    let nearbyGroups = yield Group.query().whereIn('id', nearbyQuery.rows.map(loc => loc.group_id)).fetch()
+    // let group = yield Group.query().with('users', 'meetings', 'address').where('id', groupId).fetch()
+
+    let nearbyGroups = yield Group.query().with('adddresses', 'groups').whereIn('id', nearbyQuery.rows.map(loc => loc.group_id)).fetch()
     response.status(200).json(nearbyGroups)
   }
 
   * detail (request, response) {
     let groupId = request.param('id')
     let group = yield Group.query().with('users', 'meetings', 'address').where('id', groupId).fetch()
-    // let group = yield Group.query().with('users').where('id', groupId)
-    // let address = yield Address.query().where('group_id', groupId)
 
     response.json({ group: group })
   }
