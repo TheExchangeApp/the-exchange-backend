@@ -47,7 +47,7 @@ class GroupController {
 
     // let group = yield Group.query().with('users', 'meetings', 'address').where('id', groupId).fetch()
 
-    let nearbyGroups = yield Group.query().with('adddresses', 'groups').whereIn('id', groupId, nearbyQuery.rows.map(loc => loc.group_id)).fetch()
+    let nearbyGroups = yield Group.query().with('adddresses', 'groups').where('id', groupId, nearbyQuery.rows.map(loc => loc.group_id)).fetch()
     response.status(200).json(nearbyGroups)
   }
 
