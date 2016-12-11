@@ -40,6 +40,19 @@ class MeetingController {
     }
   }
 
+  * deleteMtg (request, response) {
+    let user = request.authUser
+    let meetingId = request.param('id')
+    let mtg = yield Meeting.find(meetingId)
+    if (user.id === mtg.group.organizer_id) {
+      yield mtg.delete()
+
+      response.status(204).json({success: "Successfully deleted"})
+    } else {
+      response.status(403).json({error: "Unauthorized User"})
+    }
+  }
+
   * note (request, response) {
     let user = request.authUser
     let meetingId = request.param('id')
@@ -49,6 +62,19 @@ class MeetingController {
     let newNote = yield meeting.notes().create(data)
 
     response.json(newNote)
+  }
+
+  * deleteNote (request, response) {
+    let user = request.authUser
+    let meetingId = request.param('id')
+    let note = yield Note.query().with('meetings').where('id', meetingId).fetch()
+    if (user.id === mtg.organizer_id) {
+      yield note.delete()
+
+      response.status(204).json({ success: "Successfully deleted" })
+    } else {
+      response.status(403).json({error: "Unauthorized User"})
+    }
   }
 
   * index (request, response) {
@@ -74,7 +100,6 @@ class MeetingController {
 
     response.json(mtg)
   }
-
 }
 
 module.exports = MeetingController

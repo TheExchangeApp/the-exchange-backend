@@ -43,9 +43,12 @@ Route.post('/group/:id/meeting', 'GroupController.meeting').middleware('auth')
 Route.get('/group/:id/meeting', 'GroupController.indexMeeting')
 
 Route.get('/meeting/:id', 'MeetingController.detail')
+Route.delete('/meeting/:id', 'MeetingController.deleteMtg').middleware('auth')
+
 Route.post('/meeting/:id/join', 'MeetingController.join').middleware('auth')
 Route.post('/meeting/:id/note', 'MeetingController.note').middleware('auth')
 Route.get('/meeting/:id/note', 'MeetingController.index').middleware('auth')
+Route.delete('/meeting/:id/note', 'MeetingController.deleteNote').middleware('auth')
 
 Route.put('meeting/:id/objective', 'MeetingController.postObj').middleware('auth')
 Route.get('meeting/:id/objective', 'MeetingController.getObj').middleware('auth')

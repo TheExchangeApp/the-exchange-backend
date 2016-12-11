@@ -11,7 +11,7 @@ const Database = use("Database")
 class GroupController {
   * add (request, response) {
     let user = request.authUser
-    let data = request.only('title', 'description', 'day', 'childcare')
+    let data = request.only('title', 'description', 'category', 'day', 'childcare')
     let address = request.only('street', 'city', 'state', 'zip','lat','lng')
 
     let newGroup = yield user.myGroups().create(data)
@@ -76,7 +76,7 @@ class GroupController {
     let user = request.authUser
     let groupId = request.param('id')
     let group = yield Group.find(groupId)
-    if (user.id === removeGroup.organizer_id) {
+    if (user.id === group.organizer_id) {
       yield group.address().delete()
       yield group.delete()
 
