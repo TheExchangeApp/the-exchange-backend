@@ -12,7 +12,7 @@ class MeetingController {
   * detail (request, response) {
     let meetingId = request.param('id')
     let mtg = yield Meeting.query()
-      .with('users', 'notes', 'notes.users', 'group')
+      .with('users', 'notes', 'notes.users', 'group', 'group.organizer')
       .where('id', meetingId).fetch()
 
     response.json(mtg)
