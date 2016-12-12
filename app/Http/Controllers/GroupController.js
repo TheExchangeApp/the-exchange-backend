@@ -40,9 +40,10 @@ class GroupController {
     let user = request.authUser
     let start = request.only('lat', 'lng', 'miles')
     let distanceQuery = `point(${start.lng}, ${start.lat}) <@> point(lng, lat)::point`
+    let distance = Number(start.miles) || 10
 
     let nearbyQuery = yield Database.raw(`SELECT *, ${distanceQuery} AS userDistance FROM addresses
-    WHERE ${distanceQuery} < 10 ORDER BY userDistance`);
+    WHERE ${distanceQuery} < ${distance} ORDER BY userDistance`);
     console.log(nearbyQuery);
 
     let nearbyGroups = yield Group.query().with('address').whereIn('id', nearbyQuery.rows.map(loc => loc.group_id)).fetch()
